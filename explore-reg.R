@@ -5,7 +5,6 @@ library(cowplot)
 source("dfp_ggplot_theme.R")
 source("helpers.R")
 
-extrafont::font_import()
 
 colors <- c(
   "blue" = "#124073",
@@ -47,9 +46,11 @@ race_lvls <- c(
   "[DO NOT READ] Don't know/Refused"
 )
 
+table(dat$file_party)
+
 df <- dat %>%
   filter(
-    partyid == "Independent (No party)",  # should "or as a member of another political party" be included? 
+    file_party == "Other", 
     likely == "Already voted"
   ) %>% 
   select(response, Age = ager, Education = educ, Gender = gender, `Race / Ethnicity` = race_eth, State = state) %>%
@@ -70,6 +71,7 @@ nudge_y <- c(
 )
 
 
+
 plots <- c()
 
 demos <- df %>%
@@ -87,11 +89,6 @@ plots[['Age']]
 plots[['Education']]
 plots[['Gender']]
 plots[['Race / Ethnicity']]
-
-save_plot("plots/age.png", plots[['Age']])
-save_plot("plots/education.png", plots[['Education']])
-save_plot("plots/gender.png", plots[['Gender']])
-save_plot("plots/race_eth.png", plots[['Race / Ethnicity']])
 
 
 ## States
@@ -113,4 +110,11 @@ plots[['State']] <- ggplot(states, aes(x = long, y = lat, group = group, fill = 
 
 plots[['State']]
 
-save_plot("plots/state.png", plots[['State']])
+head(df)
+
+table(dfc$response)
+
+df %>%
+  filter(response %in% c("Dem", "Rep")) %>%
+  pull(response) %>%
+  table()
