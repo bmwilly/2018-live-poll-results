@@ -33,7 +33,7 @@ plot_demo <- function(col) {
     labs(title = paste("Early voting by", col), x = "", y = "", fill = "")
 }
 
-demos <- c("ager", "educ", "file_race", "gender", "race_eth", "state")
+demos <- c("ager", "educ", "gender", "race_eth", "state")
 
 plots <- c()
 for (col in demos) {
