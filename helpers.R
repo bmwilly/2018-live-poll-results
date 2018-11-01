@@ -1,4 +1,9 @@
-prepare_data <- function(col) {
+addline_format <- function(x, ...) {
+  gsub('\\s', '\n', x)
+}
+
+
+prepare_data <- function(df, col) {
   df$col <- df[[col]]
   
   dfc <- df %>%
@@ -26,8 +31,8 @@ prepare_data <- function(col) {
 }
 
 
-plot_demo <- function(col) {
-  dfp <- prepare_data(col)
+plot_demo <- function(df, col) {
+  dfp <- prepare_data(df, col)
   
   g <- dfp %>%
     ggplot(aes(fct_rev(col), p, fill = diff)) +
@@ -47,4 +52,37 @@ plot_demo <- function(col) {
   }
   
   g
+}
+
+
+plot_demos <- function(df) {
+  plots <- c()
+  
+  demos <- df %>%
+    select(-response, -State) %>%
+    names()
+  
+  for (col in demos) {
+    plots[[col]] <- plot_demo(df, col)
+  }
+  
+  plot_grid(plotlist = plots)
+}
+
+
+plot_states <- function(df) {
+  dfs <- prepare_data(df, 'State') %>%
+    rename(State = col) %>%
+    mutate(region = plyr::mapvalues(toupper(State), state.abb, tolower(state.name), warn_missing = FALSE))
+  
+  states <- map_data("state") %>%
+    left_join(dfs)
+  
+  ggplot(states, aes(x = long, y = lat, group = group, fill = n), color = 'white') + 
+    geom_polygon() + 
+    coord_fixed(1.3) + 
+    scale_fill_gradient(na.value = "white", low = colors['light_gray'], high = colors['dark_blue']) + 
+    labs(title = "", x = "", y = "", fill = "") + 
+    theme_dfp() + 
+    theme(axis.ticks = element_blank(), axis.text = element_blank(), legend.key.width = unit(3, "cm"))
 }

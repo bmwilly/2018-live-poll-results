@@ -17,7 +17,7 @@ theme_dfp <- function() {
   if(get_os() == "osx") {
     theme_bw() +
       theme(panel.border = element_blank(),
-            panel.grid.major = element_blank(), 
+            panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
             plot.caption=element_text(hjust=1, size=9,
                                       margin=margin(t=10),
