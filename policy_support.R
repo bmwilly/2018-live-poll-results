@@ -30,6 +30,7 @@ for (i in 1:length(questions)) {
   df$col <- df[[col]]
   df <- df %>%
     drop_na(col) %>%
+    filter(col != "Don't know") %>%
     group_by(file_party, col) %>%
     tally() %>%
     mutate(p = n / sum(n)) %>%
@@ -44,8 +45,8 @@ for (i in 1:length(questions)) {
   g <- ggplot(df, aes(file_party, p)) + 
     geom_col(width = 0.75) + 
     coord_flip() +
-    geom_text(aes(label = scales::percent(p)), nudge_y = 0.05, family = 'Montserrat-Regular', size = 2.8) +
-    scale_y_continuous(labels = function(x) scales::percent(x, accuracy = 1), limits = c(0, 0.85)) + 
+    geom_text(aes(label = scales::percent(p)), nudge_y = 0.06, family = 'Montserrat-Regular', size = 2.8) +
+    scale_y_continuous(labels = function(x) scales::percent(x, accuracy = 1), limits = c(0, 1)) + 
     labs(title = str_wrap(question, width = 44), subtitle = subtitle, x = "", y = "") + 
     theme_dfp() + 
     theme(
@@ -58,7 +59,7 @@ for (i in 1:length(questions)) {
 }
 
 g <- plot_grid(plotlist = plots)
-save_plot("plots/grid.png", g, base_aspect_ratio = 3.4)
+save_plot("plots/policy_support.png", g, base_aspect_ratio = 3.4)
 
 
 df <- data.frame()
