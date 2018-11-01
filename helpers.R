@@ -15,7 +15,7 @@ prepare_data <- function(df, col) {
     filter(response %in% c("Dem", "Rep")) %>%
     mutate(p = n / sum(n)) %>%
     select(-n) %>%
-    spread(response, p) %>%
+    spread(response, p, fill = 0) %>%
     mutate(diff = Dem - Rep)
   
   df2 <- dfc %>%

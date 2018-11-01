@@ -58,14 +58,18 @@ nudge_y <- c(
 fnames <- list.files(path = "data")
 tmp <- lapply(str_split(fnames, "elections-poll-"), function(x) x[[2]])
 states <- lapply(tmp, function(x) substr(x, 1, 2))
+districts <- lapply(tmp, function(x) substr(x, 1, 4))
+polls <- lapply(tmp, function(x) substr(x, 1, 6))
 
 dat <- lapply(list.files(path = "data", full.names = TRUE), read_csv)
 for (i in 1:length(states)) {
   dat[[i]]$state <- states[[i]]
+  dat[[i]]$district <- districts[[i]]
+  dat[[i]]$poll <- polls[[i]]
 }
 
 dat <- bind_rows(dat)
 
 ## Cleanup 
 
-rm(states, tmp, i)
+rm(states, districts, polls, tmp, i)
