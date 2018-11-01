@@ -10,7 +10,18 @@ Data from the 2018 [New York Times Upshot/Siena College live polls](https://www.
 In R,
 
 ```
-packrat::restore()
+install.packages("pacman")
+
+pacman::p_load(
+  dplyr,
+  stringr,
+  readr,
+  tidyr,
+  forcats,
+  ggmap,
+  cowplot,
+  extrafont
+)
 ```
 
 ### Fonts

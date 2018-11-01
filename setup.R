@@ -1,12 +1,14 @@
 ## Packages
 
-library(dplyr)
-library(stringr)
-library(readr)
-library(tidyr)
-library(forcats)
-library(ggmap)
-library(cowplot)
+pacman::p_load(
+  dplyr,
+  stringr,
+  readr,
+  tidyr,
+  forcats,
+  ggmap,
+  cowplot
+)
 
 ## Functions
 
