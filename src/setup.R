@@ -27,9 +27,9 @@ colors <- c(
 )
 
 educ_lvls <- c(
-  "Grade school", 
-  "High school", 
-  "Some college or trade school", 
+  "Grade school",
+  "High school",
+  "Some college or trade school",
   "Bachelors' degree",
   "Graduate or Professional Degree",
   "[DO NOT READ] Refused",
@@ -55,13 +55,13 @@ nudge_y <- c(
 
 ## Data
 
-fnames <- list.files(path = "data")
+fnames <- list.files(path = "../data")
 tmp <- lapply(str_split(fnames, "elections-poll-"), function(x) x[[2]])
 states <- lapply(tmp, function(x) substr(x, 1, 2))
 districts <- lapply(tmp, function(x) substr(x, 1, 4))
 polls <- lapply(tmp, function(x) substr(x, 1, 6))
 
-dat <- lapply(list.files(path = "data", full.names = TRUE), read_csv)
+dat <- lapply(list.files(path = "../data", full.names = TRUE), read_csv)
 for (i in 1:length(states)) {
   dat[[i]]$state <- states[[i]]
   dat[[i]]$district <- districts[[i]]
@@ -70,6 +70,6 @@ for (i in 1:length(states)) {
 
 dat <- bind_rows(dat)
 
-## Cleanup 
+## Cleanup
 
 rm(states, districts, polls, tmp, i)

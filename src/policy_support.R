@@ -9,10 +9,6 @@ questions <- c(
   "CONIMMIG" = "Do you support a bill that would reduce legal immigration and provide funds for a wall along the U.S.-Mexican border?"
 )
 
-dat %>% 
-  drop_na(CONIMMIG) %>%
-  distinct(poll)
-
 for (i in 1:length(questions)) {
   print(questions[[i]])
   print(table(dat[[names(questions[i])]]))
@@ -24,7 +20,7 @@ dfs <- list()
 for (i in 1:length(questions)) {
   question <- questions[[i]]
   col <- names(questions[i])
-  
+
   df <- dat %>%
     mutate(file_party = factor(file_party, levels = c("Other", "Republican", "Democratic")))
   df$col <- df[[col]]
@@ -35,31 +31,31 @@ for (i in 1:length(questions)) {
     tally() %>%
     mutate(p = n / sum(n)) %>%
     filter(col %in% c("Support", "support", "agree"))
-  
+
   if ('agree' %in% df$col) {
     subtitle <- paste("% of party that agrees; n =", sum(df$n))
   } else {
     subtitle <- paste("% of party that supports measure; n =", sum(df$n))
   }
-  
-  g <- ggplot(df, aes(file_party, p)) + 
-    geom_col(width = 0.75) + 
+
+  g <- ggplot(df, aes(file_party, p)) +
+    geom_col(width = 0.75) +
     coord_flip() +
     geom_text(aes(label = scales::percent(p)), nudge_y = 0.06, family = 'Montserrat-Regular', size = 2.8) +
-    scale_y_continuous(labels = function(x) scales::percent(x, accuracy = 1), limits = c(0, 1)) + 
-    labs(title = str_wrap(question, width = 44), subtitle = subtitle, x = "", y = "") + 
-    theme_dfp() + 
+    scale_y_continuous(labels = function(x) scales::percent(x, accuracy = 1), limits = c(0, 1)) +
+    labs(title = str_wrap(question, width = 44), subtitle = subtitle, x = "", y = "") +
+    theme_dfp() +
     theme(
       plot.title = element_text(hjust = 0, size = 10, margin = margin(b = 10), face = "bold", family = 'FuturaBT-Heavy'),
       plot.subtitle = element_text(hjust = 0, size = 8, family = 'Montserrat-Regular')
     )
 
-  dfs[[question]] <- df  
+  dfs[[question]] <- df
   plots[[question]] <- g
 }
 
 g <- plot_grid(plotlist = plots)
-save_plot("plots/policy_support.png", g, base_aspect_ratio = 3.4)
+# save_plot("../plots/policy_support.png", g, base_aspect_ratio = 3.4)
 
 
 df <- data.frame()
@@ -71,4 +67,4 @@ for (i in 1:length(dfs)) {
 
 df %>%
   select(question, file_party, n, p) %>%
-  write_csv("output/policy_support.csv")
+  write_csv("../output/policy_support.csv")

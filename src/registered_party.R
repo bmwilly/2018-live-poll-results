@@ -4,7 +4,7 @@ df <- dat %>%
   filter(
     file_party == "Other",
     likely == "Already voted"
-  ) %>% 
+  ) %>%
   select(response, Age = ager, Education = educ, Gender = gender, `Race / Ethnicity` = race_eth, State = state) %>%
   mutate(
     Education = factor(Education, levels = educ_lvls),
@@ -17,5 +17,4 @@ p_state <- plot_states(df)
 p_demos
 p_state
 
-
-# save_plot("plots/registered_party.png", p_demos, base_aspect_ratio = 1.2)
+# save_plot("../plots/registered_party.png", p_demos, base_aspect_ratio = 1.2)
