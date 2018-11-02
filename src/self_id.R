@@ -1,10 +1,10 @@
-source("setup.R")
+source("src/setup.R")
 
 df <- dat %>%
   filter(
-    partyid == "Independent (No party)",  # should "or as a member of another political party" be included? 
+    partyid == "Independent (No party)",  # should "or as a member of another political party" be included?
     likely == "Already voted"
-  ) %>% 
+  ) %>%
   select(response, Age = ager, Education = educ, Gender = gender, `Race / Ethnicity` = race_eth, State = state) %>%
   mutate(
     Education = factor(Education, levels = educ_lvls),

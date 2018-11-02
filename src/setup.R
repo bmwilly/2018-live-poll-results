@@ -12,8 +12,8 @@ pacman::p_load(
 
 ## Functions
 
-source("dfp_ggplot_theme.R")
-source("helpers.R")
+source("src/dfp_ggplot_theme.R")
+source("src/helpers.R")
 
 ## Constants
 
@@ -55,13 +55,13 @@ nudge_y <- c(
 
 ## Data
 
-fnames <- list.files(path = "../data")
+fnames <- list.files(path = "data")
 tmp <- lapply(str_split(fnames, "elections-poll-"), function(x) x[[2]])
 states <- lapply(tmp, function(x) substr(x, 1, 2))
 districts <- lapply(tmp, function(x) substr(x, 1, 4))
 polls <- lapply(tmp, function(x) substr(x, 1, 6))
 
-dat <- lapply(list.files(path = "../data", full.names = TRUE), read_csv)
+dat <- lapply(list.files(path = "data", full.names = TRUE), read_csv)
 for (i in 1:length(states)) {
   dat[[i]]$state <- states[[i]]
   dat[[i]]$district <- districts[[i]]

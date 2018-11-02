@@ -1,4 +1,4 @@
-source("setup.R")
+source("src/setup.R")
 
 df <- dat %>%
   filter(
@@ -17,4 +17,4 @@ p_state <- plot_states(df)
 p_demos
 p_state
 
-# save_plot("../plots/registered_party.png", p_demos, base_aspect_ratio = 1.2)
+# save_plot("plots/registered_party.png", p_demos, base_aspect_ratio = 1.2)

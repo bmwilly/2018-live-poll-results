@@ -1,4 +1,4 @@
-source("setup.R")
+source("src/setup.R")
 
 df <- dat %>%
   filter(
@@ -7,6 +7,7 @@ df <- dat %>%
   ) %>%
   select(response, District = district)
 
+col <- "District"
 df$col <- df[[col]]
 
 dfc <- df %>%
@@ -49,4 +50,4 @@ ggplot(dfd, aes(fct_reorder(district, diff), diff)) +
   theme_dfp()
 
 
-dfd %>% write_csv("../output/district_spread.csv")
+dfd %>% write_csv("processed/district_spread.csv")

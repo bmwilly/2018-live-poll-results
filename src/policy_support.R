@@ -1,4 +1,4 @@
-source("setup.R")
+source("src/setup.R")
 
 questions <- c(
   "ASSAULTW" = "Do you support or oppose a federal ban on the sale of assault-style guns and high-capacity magazines?",
@@ -55,7 +55,7 @@ for (i in 1:length(questions)) {
 }
 
 g <- plot_grid(plotlist = plots)
-# save_plot("../plots/policy_support.png", g, base_aspect_ratio = 3.4)
+# save_plot("plots/policy_support.png", g, base_aspect_ratio = 3.4)
 
 
 df <- data.frame()
@@ -67,4 +67,4 @@ for (i in 1:length(dfs)) {
 
 df %>%
   select(question, file_party, n, p) %>%
-  write_csv("../output/policy_support.csv")
+  write_csv("processed/policy_support.csv")
