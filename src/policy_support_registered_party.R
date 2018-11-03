@@ -55,7 +55,7 @@ for (i in 1:length(questions)) {
 }
 
 g <- plot_grid(plotlist = plots)
-# save_plot("plots/policy_support.png", g, base_aspect_ratio = 3.4)
+# save_plot("plots/policy_support_registered_party.png", g, base_aspect_ratio = 3.4)
 
 
 df <- data.frame()
@@ -67,4 +67,4 @@ for (i in 1:length(dfs)) {
 
 df %>%
   select(question, file_party, n, p) %>%
-  write_csv("processed/policy_support.csv")
+  write_csv("processed/policy_support_registered_party.csv")
