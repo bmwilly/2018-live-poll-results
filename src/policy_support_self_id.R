@@ -19,10 +19,10 @@ dfs <- list()
 
 
 others <- c(
-  "[DO NOT READ] Don't know/Refused", 
-  "[DO NOT READ] Refused", 
-  "Independent (No party)",
-  "or as a member of another political party"
+  # "[DO NOT READ] Don't know/Refused", 
+  # "[DO NOT READ] Refused", 
+  "Independent (No party)"
+  # "or as a member of another political party"
 )
 
 likely_lvls <- c(
@@ -36,9 +36,11 @@ likely_lvls <- c(
 )
 
 dfc <- dat %>%
-  mutate(partyid = ifelse(partyid %in% others, "Other", partyid)) %>%
-  mutate(partyid = factor(partyid, levels = c("Other", "Republican", "Democrat"))) %>%
-  mutate(likely = factor(likely, levels = likely_lvls))
+  mutate(partyid = ifelse(partyid %in% others, "Independent", partyid)) %>%
+  mutate(partyid = factor(partyid, levels = c("Independent", "Republican", "Democrat"))) %>%
+  mutate(likely = factor(likely, levels = likely_lvls)) %>%
+  filter(!is.na(partyid))
+
 
 ## Overall policy support
 
@@ -99,9 +101,10 @@ for (i in 1:length(questions)) {
 }
 
 
-g <- plot_grid(plotlist = plots)
+g <- plot_grid(plotlist = plots, nrow = 2)
 g
 save_plot("plots/policy_support_overall.png", g, base_aspect_ratio = 3.4)
+# save_plot("plots/policy_support_overall.png", g, base_height = 6, base_aspect_ratio = 1.5)
 
 
 ## Policy support by party
@@ -150,9 +153,10 @@ for (i in 1:length(questions)) {
   plots[[question]] <- g
 }
 
-g <- plot_grid(plotlist = plots)
+g <- plot_grid(plotlist = plots, nrow = 2)
 g
 save_plot("plots/policy_support_self_id.png", g, base_aspect_ratio = 3.4)
+# save_plot("plots/policy_support_self_id.png", g, base_height = 6, base_aspect_ratio = 1.5)
 
 
 ## Write data
